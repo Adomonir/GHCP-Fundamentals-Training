@@ -3,9 +3,19 @@ import re
 from pathlib import Path
 from collections import defaultdict
 
-def rename_chroma_to_chroma(root_dir="."):
+def case_preserving_replace(match):
+    """Replace 'globex' with 'chroma' while preserving the case pattern."""
+    original = match.group(0)
+    if original.isupper():
+        return 'CHROMA'
+    elif original[0].isupper():
+        return 'Chroma'
+    else:
+        return 'chroma'
+
+def rename_globex_to_chroma(root_dir="."):
     """
-    Recursively rename files and symbols from 'chroma_' to 'chroma_'.
+    Recursively rename files and symbols from 'globex' to 'chroma'.
     Skips .git and node_modules directories.
     """
     
@@ -24,7 +34,34 @@ def rename_chroma_to_chroma(root_dir="."):
     # File extensions to process
     text_extensions = {'.py', '.yaml', '.yml', '.md', '.txt', '.json', '.toml', '.cfg', '.ini'}
     
-    # Walk directory tree
+    # First pass: collect directories to rename (bottom-up to avoid conflicts)
+    dirs_to_rename = []
+    for dirpath, dirnames, filenames in os.walk(root_dir, topdown=False):
+        # Filter out skip directories
+        dirnames[:] = [d for d in dirnames if d not in skip_dirs]
+        
+        for dirname in dirnames:
+            if 'globex' in dirname.lower():
+                old_dirpath = Path(dirpath) / dirname
+                new_dirname = re.sub(r'globex', case_preserving_replace, dirname, flags=re.IGNORECASE)
+                new_dirpath = Path(dirpath) / new_dirname
+                dirs_to_rename.append((old_dirpath, new_dirpath, dirname, new_dirname))
+    
+    # Rename directories
+    for old_path, new_path, old_name, new_name in dirs_to_rename:
+        try:
+            old_path.rename(new_path)
+            rename_log.append({
+                'type': 'DIR',
+                'old_name': old_name,
+                'new_name': new_name,
+                'status': 'SUCCESS'
+            })
+            stats['files_renamed'] += 1
+        except Exception as e:
+            stats['errors'].append(f"Failed to rename directory {old_path}: {str(e)}")
+    
+    # Walk directory tree for files
     for dirpath, dirnames, filenames in os.walk(root_dir):
         # Filter out skip directories
         dirnames[:] = [d for d in dirnames if d not in skip_dirs]
@@ -33,9 +70,9 @@ def rename_chroma_to_chroma(root_dir="."):
         for filename in filenames:
             filepath = Path(dirpath) / filename
             
-            # Rename file if it contains 'chroma_'
-            if 'chroma_' in filename:
-                new_filename = filename.replace('chroma_', 'chroma_')
+            # Rename file if it contains 'globex'
+            if 'globex' in filename.lower():
+                new_filename = re.sub(r'globex', case_preserving_replace, filename, flags=re.IGNORECASE)
                 new_filepath = Path(dirpath) / new_filename
                 
                 try:
@@ -63,8 +100,8 @@ def rename_chroma_to_chroma(root_dir="."):
                     with open(filepath, 'r', encoding='utf-8') as f:
                         content = f.read()
                     
-                    # Count replacements
-                    new_content, count = re.subn(r'chroma_', 'chroma_', content)
+                    # Count replacements - case preserving
+                    new_content, count = re.subn(r'globex', case_preserving_replace, content, flags=re.IGNORECASE)
                     
                     if count > 0:
                         with open(filepath, 'w', encoding='utf-8') as f:
@@ -131,5 +168,5 @@ def print_summary_table(rename_log, stats):
 
 if __name__ == "__main__":
     root_directory = "."
-    rename_log, stats = rename_chroma_to_chroma(root_directory)
+    rename_log, stats = rename_globex_to_chroma(root_directory)
     print_summary_table(rename_log, stats)
