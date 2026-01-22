@@ -13,11 +13,21 @@ Intentionally simplistic for demo purposes.
 """
 import os, re, sys, pathlib
 
+def case_preserving_replace(match):
+    """Replace 'globex' with 'chroma' while preserving the case pattern."""
+    original = match.group(0)
+    if original.isupper():
+        return 'CHROMA'
+    elif original[0].isupper():
+        return 'Chroma'
+    else:
+        return 'chroma'
+
 def bulk_rename(root_path: str):
     pattern = re.compile(r'globex', re.IGNORECASE)
     for path in pathlib.Path(root_path).rglob('*.py'):
         text = path.read_text()
-        replaced = pattern.sub('chroma', text)
+        replaced = pattern.sub(case_preserving_replace, text)
         if replaced != text:
             path.write_text(replaced)
             print(f"Updated {path}")

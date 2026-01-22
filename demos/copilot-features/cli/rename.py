@@ -3,6 +3,16 @@ import re
 from pathlib import Path
 from collections import defaultdict
 
+def case_preserving_replace(match):
+    """Replace 'globex' with 'chroma' while preserving the case pattern."""
+    original = match.group(0)
+    if original.isupper():
+        return 'CHROMA'
+    elif original[0].isupper():
+        return 'Chroma'
+    else:
+        return 'chroma'
+
 def rename_globex_to_chroma(root_dir="."):
     """
     Recursively rename files and symbols from 'globex' to 'chroma'.
@@ -33,7 +43,7 @@ def rename_globex_to_chroma(root_dir="."):
         for dirname in dirnames:
             if 'globex' in dirname.lower():
                 old_dirpath = Path(dirpath) / dirname
-                new_dirname = re.sub(r'globex', 'chroma', dirname, flags=re.IGNORECASE)
+                new_dirname = re.sub(r'globex', case_preserving_replace, dirname, flags=re.IGNORECASE)
                 new_dirpath = Path(dirpath) / new_dirname
                 dirs_to_rename.append((old_dirpath, new_dirpath, dirname, new_dirname))
     
@@ -62,7 +72,7 @@ def rename_globex_to_chroma(root_dir="."):
             
             # Rename file if it contains 'globex'
             if 'globex' in filename.lower():
-                new_filename = re.sub(r'globex', 'chroma', filename, flags=re.IGNORECASE)
+                new_filename = re.sub(r'globex', case_preserving_replace, filename, flags=re.IGNORECASE)
                 new_filepath = Path(dirpath) / new_filename
                 
                 try:
@@ -90,8 +100,8 @@ def rename_globex_to_chroma(root_dir="."):
                     with open(filepath, 'r', encoding='utf-8') as f:
                         content = f.read()
                     
-                    # Count replacements - case insensitive
-                    new_content, count = re.subn(r'globex', 'chroma', content, flags=re.IGNORECASE)
+                    # Count replacements - case preserving
+                    new_content, count = re.subn(r'globex', case_preserving_replace, content, flags=re.IGNORECASE)
                     
                     if count > 0:
                         with open(filepath, 'w', encoding='utf-8') as f:

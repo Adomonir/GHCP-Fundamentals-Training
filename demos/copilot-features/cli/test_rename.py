@@ -184,21 +184,51 @@ class GlobexManager:
 
 
 def test_mixed_case_preservation(temp_dir):
-    """Test that globex is replaced case-insensitively."""
+    """Test that globex is replaced with case preservation."""
     py_file = Path(temp_dir) / "test.py"
     py_file.write_text("""
 # Globex is a company
 GLOBEX_CONSTANT = 1
 globex_var = 2
+class GlobexHandler:
+    pass
 """)
     
     rename_log, stats = rename_globex_to_chroma(temp_dir)
     content = py_file.read_text()
     
-    # All forms should be replaced
+    # All forms should be replaced with case preserved
     assert 'globex' not in content.lower()
-    assert 'chroma' in content.lower()
+    assert 'Chroma is a company' in content
+    assert 'CHROMA_CONSTANT' in content
+    assert 'chroma_var' in content
+    assert 'ChromaHandler' in content
 
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+
+
+def test_case_preserved_file_renaming(temp_dir):
+    """Test that file names preserve case when renamed."""
+    # Create files with different case patterns
+    file1 = Path(temp_dir) / "GlobexService.py"
+    file1.write_text("class GlobexService: pass")
+    
+    file2 = Path(temp_dir) / "GLOBEX_CONFIG.yaml"
+    file2.write_text("globex: true")
+    
+    file3 = Path(temp_dir) / "globex_utils.py"
+    file3.write_text("def globex_func(): pass")
+    
+    rename_log, stats = rename_globex_to_chroma(temp_dir)
+    
+    # Check that files were renamed with case preserved
+    assert Path(temp_dir, "ChromaService.py").exists()
+    assert Path(temp_dir, "CHROMA_CONFIG.yaml").exists()
+    assert Path(temp_dir, "chroma_utils.py").exists()
+    
+    # Original files should not exist
+    assert not file1.exists()
+    assert not file2.exists()
+    assert not file3.exists()
