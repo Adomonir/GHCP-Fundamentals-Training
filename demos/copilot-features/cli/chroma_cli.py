@@ -6,10 +6,10 @@ Its main purpose is to demonstrate bulk renaming operations.
 
 """
 import logging
-logger = logging.getLogger("globex_demo")
+logger = logging.getLogger("chroma_demo")
 
 import argparse
-from globex_service import GlobexService
+from chroma_service import GlobexService
 
 def main():
     parser = argparse.ArgumentParser(description="Globex CLI utility")
@@ -20,13 +20,13 @@ def main():
     svc = GlobexService()
 
     if args.command == "add":
-        svc.globex_add_item(args.value)
+        svc.chroma_add_item(args.value)
         print("Item added.")
     elif args.command == "remove":
-        removed = svc.globex_remove_item(args.value)
+        removed = svc.chroma_remove_item(args.value)
         print("Removed." if removed else "Not found.")
     elif args.command == "list":
-        print("\n".join(svc.globex_list_items()))
+        print("\n".join(svc.chroma_list_items()))
 
 if __name__ == "__main__":
     main()
@@ -38,10 +38,10 @@ Its main purpose is to demonstrate bulk renaming operations.
 
 """
 import logging
-logger = logging.getLogger("globex_demo")
+logger = logging.getLogger("chroma_demo")
 
 import argparse
-from globex_service import GlobexService
+from chroma_service import GlobexService
 
 def main():
     parser = argparse.ArgumentParser(description="Globex CLI utility")
@@ -52,13 +52,13 @@ def main():
     svc = GlobexService()
 
     if args.command == "add":
-        svc.globex_add_item(args.value)
+        svc.chroma_add_item(args.value)
         print("Item added.")
     elif args.command == "remove":
-        removed = svc.globex_remove_item(args.value)
+        removed = svc.chroma_remove_item(args.value)
         print("Removed." if removed else "Not found.")
     elif args.command == "list":
-        print("\n".join(svc.globex_list_items()))
+        print("\n".join(svc.chroma_list_items()))
 
 if __name__ == "__main__":
     main()
@@ -70,10 +70,10 @@ Its main purpose is to demonstrate bulk renaming operations.
 
 """
 import logging
-logger = logging.getLogger("globex_demo")
+logger = logging.getLogger("chroma_demo")
 
 import argparse
-from globex_service import GlobexService
+from chroma_service import GlobexService
 
 def main():
     parser = argparse.ArgumentParser(description="Globex CLI utility")
@@ -84,13 +84,13 @@ def main():
     svc = GlobexService()
 
     if args.command == "add":
-        svc.globex_add_item(args.value)
+        svc.chroma_add_item(args.value)
         print("Item added.")
     elif args.command == "remove":
-        removed = svc.globex_remove_item(args.value)
+        removed = svc.chroma_remove_item(args.value)
         print("Removed." if removed else "Not found.")
     elif args.command == "list":
-        print("\n".join(svc.globex_list_items()))
+        print("\n".join(svc.chroma_list_items()))
 
 if __name__ == "__main__":
     main()
@@ -102,10 +102,10 @@ Its main purpose is to demonstrate bulk renaming operations.
 
 """
 import logging
-logger = logging.getLogger("globex_demo")
+logger = logging.getLogger("chroma_demo")
 
 import argparse
-from globex_service import GlobexService
+from chroma_service import GlobexService
 
 def main():
     parser = argparse.ArgumentParser(description="Globex CLI utility")
@@ -116,13 +116,13 @@ def main():
     svc = GlobexService()
 
     if args.command == "add":
-        svc.globex_add_item(args.value)
+        svc.chroma_add_item(args.value)
         print("Item added.")
     elif args.command == "remove":
-        removed = svc.globex_remove_item(args.value)
+        removed = svc.chroma_remove_item(args.value)
         print("Removed." if removed else "Not found.")
     elif args.command == "list":
-        print("\n".join(svc.globex_list_items()))
+        print("\n".join(svc.chroma_list_items()))
 
 if __name__ == "__main__":
     main()

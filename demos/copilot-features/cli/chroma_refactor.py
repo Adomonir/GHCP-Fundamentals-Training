@@ -5,16 +5,16 @@ Its main purpose is to demonstrate bulk renaming operations.
 
 """
 import logging
-logger = logging.getLogger("globex_demo")
+logger = logging.getLogger("chroma_demo")
 
-"""Utility to perform bulk rename from 'globex_' to 'chroma_'.
+"""Utility to perform bulk rename from 'chroma_' to 'chroma_'.
 
 Intentionally simplistic for demo purposes.
 """
 import os, re, sys, pathlib
 
 def bulk_rename(root_path: str):
-    pattern = re.compile(r'globex_')
+    pattern = re.compile(r'chroma_')
     for path in pathlib.Path(root_path).rglob('*.py'):
         text = path.read_text()
         replaced = pattern.sub('chroma_', text)
@@ -31,16 +31,16 @@ Its main purpose is to demonstrate bulk renaming operations.
 
 """
 import logging
-logger = logging.getLogger("globex_demo")
+logger = logging.getLogger("chroma_demo")
 
-"""Utility to perform bulk rename from 'globex_' to 'chroma_'.
+"""Utility to perform bulk rename from 'chroma_' to 'chroma_'.
 
 Intentionally simplistic for demo purposes.
 """
 import os, re, sys, pathlib
 
 def bulk_rename(root_path: str):
-    pattern = re.compile(r'globex_')
+    pattern = re.compile(r'chroma_')
     for path in pathlib.Path(root_path).rglob('*.py'):
         text = path.read_text()
         replaced = pattern.sub('chroma_', text)
@@ -57,16 +57,16 @@ Its main purpose is to demonstrate bulk renaming operations.
 
 """
 import logging
-logger = logging.getLogger("globex_demo")
+logger = logging.getLogger("chroma_demo")
 
-"""Utility to perform bulk rename from 'globex_' to 'chroma_'.
+"""Utility to perform bulk rename from 'chroma_' to 'chroma_'.
 
 Intentionally simplistic for demo purposes.
 """
 import os, re, sys, pathlib
 
 def bulk_rename(root_path: str):
-    pattern = re.compile(r'globex_')
+    pattern = re.compile(r'chroma_')
     for path in pathlib.Path(root_path).rglob('*.py'):
         text = path.read_text()
         replaced = pattern.sub('chroma_', text)
@@ -83,16 +83,16 @@ Its main purpose is to demonstrate bulk renaming operations.
 
 """
 import logging
-logger = logging.getLogger("globex_demo")
+logger = logging.getLogger("chroma_demo")
 
-"""Utility to perform bulk rename from 'globex_' to 'chroma_'.
+"""Utility to perform bulk rename from 'chroma_' to 'chroma_'.
 
 Intentionally simplistic for demo purposes.
 """
 import os, re, sys, pathlib
 
 def bulk_rename(root_path: str):
-    pattern = re.compile(r'globex_')
+    pattern = re.compile(r'chroma_')
     for path in pathlib.Path(root_path).rglob('*.py'):
         text = path.read_text()
         replaced = pattern.sub('chroma_', text)

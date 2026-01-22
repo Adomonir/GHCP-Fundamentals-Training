@@ -3,9 +3,9 @@ import re
 from pathlib import Path
 from collections import defaultdict
 
-def rename_globex_to_chroma(root_dir="."):
+def rename_chroma_to_chroma(root_dir="."):
     """
-    Recursively rename files and symbols from 'globex_' to 'chroma_'.
+    Recursively rename files and symbols from 'chroma_' to 'chroma_'.
     Skips .git and node_modules directories.
     """
     
@@ -33,9 +33,9 @@ def rename_globex_to_chroma(root_dir="."):
         for filename in filenames:
             filepath = Path(dirpath) / filename
             
-            # Rename file if it contains 'globex_'
-            if 'globex_' in filename:
-                new_filename = filename.replace('globex_', 'chroma_')
+            # Rename file if it contains 'chroma_'
+            if 'chroma_' in filename:
+                new_filename = filename.replace('chroma_', 'chroma_')
                 new_filepath = Path(dirpath) / new_filename
                 
                 try:
@@ -64,7 +64,7 @@ def rename_globex_to_chroma(root_dir="."):
                         content = f.read()
                     
                     # Count replacements
-                    new_content, count = re.subn(r'globex_', 'chroma_', content)
+                    new_content, count = re.subn(r'chroma_', 'chroma_', content)
                     
                     if count > 0:
                         with open(filepath, 'w', encoding='utf-8') as f:
@@ -131,5 +131,5 @@ def print_summary_table(rename_log, stats):
 
 if __name__ == "__main__":
     root_directory = "."
-    rename_log, stats = rename_globex_to_chroma(root_directory)
+    rename_log, stats = rename_chroma_to_chroma(root_directory)
     print_summary_table(rename_log, stats)
