@@ -32,7 +32,30 @@ We currently triage support tickets using Severity only.
 - Medium means a meaningful user impact but workarounds exist
 - High means blocks key workflows or causes data loss
 
+### Priority levels
+
+- **P0** (Critical): Service down, data loss, or security breach. Immediate action required.
+- **P1** (High): Major feature broken, significant user impact, no workaround. Address within hours.
+- **P2** (Medium): Important issue with workaround available. Address within days.
+- **P3** (Low): Minor issue, cosmetic bug, or enhancement request. Address when capacity allows.
+
+### Severity to Priority mapping
+
+| Severity | Default Priority | Notes |
+|----------|-----------------|-------|
+| High | P0 or P1 | P0 if service impact, P1 if feature impact |
+| Medium | P2 | Can escalate to P1 if affecting many users |
+| Low | P3 | Can escalate if accumulating user complaints |
+
+### How to triage in 60 seconds
+
+1. **Identify impact**: How many users affected? Is service down?
+2. **Check severity**: Low, Medium, or High based on impact and workarounds
+3. **Assign priority**: Use the Severity to Priority mapping above
+4. **Tag & assign**: Add priority label and assign to appropriate team/person
+5. **Set expectations**: Comment with expected timeline based on priority
+
 ### Current rules
 - Triage happens daily
 - High severity should be addressed first
-- We do not currently define priority labels, default ownership, or a fast triage checklist
+- Priority labels guide the order of work within each severity level
